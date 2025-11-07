@@ -49,9 +49,12 @@ if(!empty($_POST)){
         ]);
     }
 
-    $url = urlencode("http://localhost/Grammatica_FormRegistrazione/confirm_verification.php?token=$token_info[0]");
+    if(isset($token_info[0])){
+        $url = urlencode("http://localhost/Grammatica_FormRegistrazione/confirm_verification.php?token=$token_info[0]");
+        sendVerificationEmail($_POST['email'], $_POST["username"], $url);
+    }
 
-    sendVerificationEmail($_POST['email'], $_POST["username"], $url);
+
 }
 
 
