@@ -1,0 +1,22 @@
+RewriteEngine on
+
+RewriteBase /Grammatica_Calcetto_PHP/
+
+DirectoryIndex index.php
+
+
+# Regole routing
+RewriteRule ^index/?$ index.php [L,QSA]
+RewriteRule ^home/?$ index.php [L,QSA]
+RewriteRule ^login/?$ login.php [L,QSA]
+RewriteRule ^profilo/?$ profilo.php [L,QSA]
+RewriteRule ^campi/?$ campi.php [L,QSA]
+
+
+# Se richiedo un file (-f) o una directory (-d) la serve
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Tutti gli altri casi redirect su index.php
+RewriteRule ^(.*)$ index.php [L,QSA]
