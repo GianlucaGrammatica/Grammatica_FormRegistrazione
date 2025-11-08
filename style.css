@@ -30,6 +30,8 @@ body  {
 }
 
 .Form {
+    min-width: 10rem;
+    max-width: 25rem;
     width: 40%;
 }
 
@@ -57,4 +59,8 @@ body  {
 
 .Button:active {
     background-color: #068591;
+}
+
+.Error {
+    color: #702727;
 }

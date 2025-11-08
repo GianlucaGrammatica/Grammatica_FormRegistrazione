@@ -32,7 +32,7 @@ if(!empty($_POST)){
         $errors["email"] = "Email already exists";
     }
 
-    if(empty($errors)){
+    if(!isset($errors)){
         require "email_verification_service.php";
 
         $token_info = generateEmailVerificationToken();
@@ -50,7 +50,7 @@ if(!empty($_POST)){
     }
 
     if(isset($token_info[0])){
-        $url = urlencode("http://localhost/Grammatica_FormRegistrazione/confirm_verification.php?token=$token_info[0]");
+        $url = "http://localhost/Grammatica_FormRegistrazione/confirm_verification.php?token=".urlencode($token_info[0]);
         sendVerificationEmail($_POST['email'], $_POST["username"], $url);
     }
 
@@ -74,6 +74,7 @@ if(!empty($_POST)){
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div class="FormCon">
     <h1><?= $title ?></h1>
 
@@ -96,18 +97,59 @@ if(!empty($_POST)){
         </div>
         <div class="FromRow">
             <label for="password">⪩ Password</label>
-            <input type="text" name="password" id="password" required class="Input">
+            <input type="password" name="password" id="password" required class="Input">
         </div>
         <div class="FromRow">
             <label for="password2">⪩ Confirm Password</label>
-            <input type="text" name="password2" id="password2" required class="Input">
+            <input type="password" name="password2" id="password2" required class="Input">
         </div>
         <div class="FromRowSubmit">
             <input type="submit" value="▸ Sign Up ◂" class="Button">
         </div>
     </form>
 
-    <p><?php if(!empty($errors)) print_r($errors) ?></p>
+    <!-- <p class="Error"><?php //if(!empty($errors)) print_r($errors) ?></p> -->
+
+    <?php
+    if(!empty($errors["username"])){ ?>
+        <script>
+            Swal.fire({
+                title: "Invalid Input",
+                text: "<?= $errors["username"] ?>",
+                icon: "error"
+            });
+        </script>
+    <?php   }
+    ?>
+    <?php
+    if(!empty($errors["email"])){ ?>
+        <script>
+            Swal.fire({
+                title: "Invalid Input",
+                text: "<?= $errors["email"] ?>",
+                icon: "error",
+                background: "#F9FCFD",
+                confirmButtonColor: "#07A4B5",
+                iconColor: "#cc4a4a"
+            });
+        </script>
+    <?php   }
+    ?>
+    <?php
+    if(!empty($errors["password"])){ ?>
+        <script>
+            Swal.fire({
+                title: "Invalid Input",
+                text: "<?= $errors["password"] ?>",
+                icon: "error"
+            });
+        </script>
+    <?php   }
+    ?>
 </div>
+
+<script>
+    console.log("AAAAA");
+</script>
 </body>
 </html>
