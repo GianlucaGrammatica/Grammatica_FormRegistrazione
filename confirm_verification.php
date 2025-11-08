@@ -16,7 +16,7 @@ if(!empty($_GET)){
     $utente = $stmt->fetch();
 
   if($utente){
-    $stmt = $pdo->prepare("UPDATE utenti SET email_verified = true WHERE id = ?");
+    $stmt = $pdo->prepare("UPDATE utenti SET email_verified = true WHERE id = ? AND verification_expires > NOW()");
     $stmt->execute([$utente["id]]);
   }
 }
